@@ -1,7 +1,10 @@
 package com.project.server;
 
 import java.net.InetSocketAddress;
+import java.util.Random;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.java_websocket.WebSocket;
@@ -10,8 +13,9 @@ import org.java_websocket.server.WebSocketServer;
 
 public class StockServer extends WebSocketServer {
 
-    private static final int PORT = 8080; // Change if needed
+    private static final int PORT = 8080;
     private static final Set<WebSocket> clients = new CopyOnWriteArraySet<>();
+    private static final Random random = new Random();
 
     public StockServer() {
         super(new InetSocketAddress(PORT));
@@ -21,6 +25,16 @@ public class StockServer extends WebSocketServer {
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         clients.add(conn);
         System.out.println("New connection: " + conn.getRemoteSocketAddress());
+        conn.send("Welcome! Live stock prices will start updating.");
+
+        // Start sending stock prices to the client every 2 seconds
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                double stockPrice = 1000 + (random.nextDouble() * 200); // Simulated stock price
+                broadcast("Stock Price: $" + String.format("%.2f", stockPrice));
+            }
+        }, 0, 2000); // Send update every 2 seconds
     }
 
     @Override
@@ -31,8 +45,7 @@ public class StockServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        System.out.println("Received: " + message);
-        broadcast(message); // Send message to all clients
+        System.out.println("Received from client: " + message);
     }
 
     @Override

@@ -1,3 +1,5 @@
+package com.project.server;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,7 +9,7 @@ public class StockUpdater {
     public static void main(String[] args) {
         webSocketServer.start();
         Timer timer = new Timer();
-        
+
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
