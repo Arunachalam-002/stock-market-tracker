@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Live Stock Prices</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Stock Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h2>📈 Live Stock Prices</h2>
-    <div id="stockOutput"></div>
+<body class="bg-black text-white font-sans min-h-screen flex flex-col items-center p-8">
 
-    <script src="script.js"></script>
+  <h1 class="text-3xl font-bold text-cyan-400 mb-4">📈 Live Stock Prices</h1>
+
+  <!-- Search bar -->
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Search Stocks..."
+    class="w-full max-w-md mx-auto block p-3 rounded-lg bg-gray-800 text-white border border-gray-700"
+  />
+
+  <!-- Grid for stocks -->
+  <div id="stockGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 w-full max-w-screen-xl">
+    <!-- Stock cards will be injected here -->
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
